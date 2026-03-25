@@ -1,0 +1,297 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Privacy Policy-DK2B | The27LINKS</title>
+    
+    <link rel="icon" type="image/png" href="https://github.com/The27LINKS/Data/blob/main/assets/image/DK2BLogo.png?raw=true">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+
+    <style>
+        /* --- CSS Variables & Reset --- */
+        :root {
+            --bg-main: #050505;      /* Deepest black background */
+            --bg-card: #111111;      /* Slightly lighter box background */
+            --text-primary: #ffffff; /* Main headings */
+            --text-secondary: #a0a0a0; /* Body text */
+            --accent: #a855f7;       /* The purple accent color */
+            --border-color: #222222; /* Subtle borders */
+            --nav-bg: rgba(15, 15, 15, 0.9); /* Semi-transparent nav */
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 100px; /* Extra space for bottom nav bar */
+            line-height: 1.7;
+        }
+
+        /* Professional Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-box { display: flex; align-items: center; gap: 10px; }
+        .logo-img { width: 32px; height: 32px; border-radius: 8px; }
+        .logo-text { font-weight: 800; font-size: 1rem; letter-spacing: -0.5px; }
+
+
+        /* --- Main Layout Wrapper --- */
+        .page-wrapper {
+            max-width: 1000px;
+            margin: 0 auto; /* Centering the content vertically */
+            padding: 20px;
+        }
+
+        .main-title-section {
+            text-align: center;
+            margin-bottom: 50px;
+            margin-top: 20px;
+        }
+
+        h1.main-title {
+            font-size: 3rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -1px;
+        }
+
+        h1.main-title span {
+            color: var(--accent);
+        }
+
+        .effective-date {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* --- The "Boxes" (Cards) Design --- */
+        .policy-card {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        /* UX Effect: Slight glow on hover */
+        .policy-card:hover {
+            border-color: rgba(168, 85, 247, 0.4); /* Subtle purple border on hover */
+            transform: translateY(-2px);
+        }
+
+        .policy-card h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+        
+        /* Adding a small accent line before headings */
+        .policy-card h2::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 24px;
+            background-color: var(--accent);
+            margin-right: 15px;
+            border-radius: 4px;
+        }
+
+        .policy-card p {
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        /* --- Custom List Styling for better UX --- */
+        .styled-list {
+            list-style: none;
+            padding-left: 10px;
+        }
+
+        .styled-list li {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        /* Custom purple bullet points */
+        .styled-list li::before {
+            content: '•';
+            color: var(--accent);
+            font-size: 1.5rem;
+            position: absolute;
+            left: 0;
+            top: -5px;
+            line-height: 1;
+        }
+        
+        .highlight-text {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        /* --- Bottom Navigation Bar (Floating Pill) --- */
+        .bottom-nav-container {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            pointer-events: none; /* Allows clicking through the container area */
+        }
+
+        .bottom-nav {
+            pointer-events: auto; /* Re-enables clicking on the nav itself */
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px); /* Frosted glass effect */
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            display: flex;
+            padding: 12px 40px;
+            gap: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .bottom-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .bottom-nav a:hover {
+            color: var(--text-primary);
+        }
+
+        .bottom-nav a.active {
+            color: var(--accent);
+        }
+
+        /* Responsive adjustments for smaller screens */
+        @media (max-width: 768px) {
+            .main-title { font-size: 2.2rem; }
+            .policy-card { padding: 25px; }
+            .bottom-nav { padding: 10px 20px; gap: 15px; width: 90%; justify-content: space-between; }
+            .bottom-nav a { font-size: 0.7rem; letter-spacing: 0.5px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-box">
+            <img src="https://github.com/The27LINKS/Data/blob/main/assets/image/DK2BLogo.png?raw=true" class="logo-img">
+            <span class="logo-text">DK2B</span>
+        </div>
+        <div style="font-family: 'JetBrains Mono'; font-size: 0.6rem; opacity: 0.5;">THE27LINKS</div>
+    </header>
+
+    <div class="page-wrapper">
+        
+        <div class="main-title-section">
+            <h1 class="main-title">Privacy <span>Policy.</span></h1>
+            <p class="effective-date">Effective Date: February 21, 2026</p>
+        </div>
+
+        <div class="policy-card">
+            <h2>1. Introduction</h2>
+            <p>Welcome to DK2B (part of The27LINKS Ecosystem). We are committed to protecting the privacy and security of the enterprise data processed through our platform. This Privacy Policy outlines how we handle information when you use our automated Business Requirements Document (BRD) generation and architectural handoff services.</p>
+            <p>By using our Scalable Business Logic tools, you trust us with your project communications, and we take that trust seriously.</p>
+        </div>
+
+        <div class="policy-card">
+            <h2>2. Information We Collect</h2>
+            <p>To provide seamless automated synthesis, our system collects and processes specific categories of data:</p>
+            <ul class="styled-list">
+                <li><span class="highlight-text">Project Communications:</span> Data securely ingested from authorized communication channels (e.g., team chat logs, emails, meeting transcripts) provided by your enterprise.</li>
+                <li><span class="highlight-text">Raw Enterprise Data:</span> Documents, software/hardware specifications, IoT data schemas, and robotics project assets uploaded to our platform.</li>
+                <li><span class="highlight-text">Usage Metrics:</span> Technical logs related to API interactions and performance metrics of the automated synthesis engine.</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h2>3. How We Use Your Data</h2>
+            <p>Your data is processed Strictly for enterprise functionality and platform improvement:</p>
+            <ul class="styled-list">
+                <li>Automatically generating comprehensive and accurate BRDs from raw input data.</li>
+                <li>Accelerating requirement analysis and mitigating conflicts in complex project lifecycles.</li>
+                <li>Ensuring the security, integrity, and scalability of the DK2B platform.</li>
+            </ul>
+        </div>
+
+        <div class="policy-card">
+            <h2>4. Data Security & Retention</h2>
+            <p>We implement industrial-grade security measures. All project communications and raw data are protected using robust encryption both in transit and at rest. Data ingested for BRD generation is processed in isolated environments.</p>
+            <p>We retain your data only for as long as your enterprise account is active or as needed to fulfill service agreements. You have the right to request the deletion of ingested raw data at any time.</p>
+        </div>
+
+        <div class="policy-card">
+            <h2>5. Jurisdiction & Contact</h2>
+            <p>This policy is governed by the laws of India, subject to the exclusive jurisdiction of the courts in Rohtak, Haryana.</p>
+            <p style="margin-top: 20px;">If you have questions regarding data handling or security, please contact our team:</p>
+            <p class="highlight-text" style="color: var(--accent);">support@the27links.in</p>
+        </div>
+
+    </div> <div class="bottom-nav-container">
+        <nav class="bottom-nav">
+            <a href="index.html">HOME</a>
+            <a href="tech.html">TECH</a>
+            <a href="security.html">SECURITY</a>
+            <a href="enterprise.html">BIZ</a>
+            <a href="privacy-policy.html" class="active">PRIVACY POLICY</a>
+        </nav>
+    </div>
+
+    <script>
+        // Simple script to ensure page loads correctly and handle slight UX enhancements
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("DK2B Privacy Policy Loaded - Dark Theme UI/UX Enhanced");
+            
+            // Optional: Add subtle fade-in effect for cards on load
+            const cards = document.querySelectorAll('.policy-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * (index + 1)); // Staggered loading effect
+            });
+        });
+    </script>
+
+</body>
+</html>

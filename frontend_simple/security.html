@@ -1,0 +1,352 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Security-DK2B | The27LINKS</title>
+    
+    <link rel="icon" type="image/png" href="https://github.com/The27LINKS/Data/blob/main/assets/image/DK2BLogo.png?raw=true">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Variables & Reset --- */
+        :root {
+            --bg-main: #050505;      
+            --bg-card: #111111;      
+            --text-primary: #ffffff; 
+            --text-secondary: #a0a0a0; 
+            --accent: #3b82f6;       /* Blue accent for Security Page */
+            --terminal-green: #22c55e; /* Green for terminal text */
+            --border-color: #222222; 
+            --nav-bg: rgba(15, 15, 15, 0.9); 
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 120px; 
+            line-height: 1.7;
+        }
+
+         /* Professional Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-box { display: flex; align-items: center; gap: 10px; }
+        .logo-img { width: 32px; height: 32px; border-radius: 8px; }
+        .logo-text { font-weight: 800; font-size: 1rem; letter-spacing: -0.5px; }
+
+
+
+        /* --- Main Layout Wrapper --- */
+        .page-wrapper {
+            max-width: 1000px;
+            margin: 0 auto; 
+            padding: 20px;
+        }
+
+        .main-title-section {
+            margin-bottom: 40px;
+            margin-top: 20px;
+            text-align: left; 
+        }
+
+        .pre-title {
+            color: var(--accent);
+            background-color: rgba(59, 130, 246, 0.1); /* Slight blue background */
+            padding: 4px 12px;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            margin-bottom: 15px;
+            display: inline-block;
+        }
+
+        h1.main-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        h1.main-title span {
+            color: var(--accent);
+        }
+
+        .subtitle-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        /* --- Terminal Block --- */
+        .terminal-box {
+            background-color: #0a0a0a;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px 25px;
+            font-family: 'Courier New', Courier, monospace;
+            color: var(--terminal-green);
+            margin-bottom: 40px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            overflow-x: auto;
+        }
+
+        .terminal-box div {
+            margin-bottom: 4px;
+        }
+        
+        .terminal-box span.prompt {
+            color: var(--text-secondary);
+            margin-right: 8px;
+        }
+
+        /* --- The "Boxes" (Cards) Design --- */
+        .security-card {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .security-card:hover {
+            border-color: rgba(59, 130, 246, 0.4); /* Blue glow on hover */
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(59, 130, 246, 0.1);
+        }
+
+        .security-card h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 15px;
+            font-weight: 600;
+        }
+
+        .security-card p.card-desc {
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+
+        /* --- Custom List Styling (Checkmarks) --- */
+        .check-list {
+            list-style: none;
+            padding-left: 0;
+            margin: 0;
+        }
+
+        .check-list li {
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+            position: relative;
+            padding-left: 30px;
+            font-size: 1.05rem;
+            display: flex;
+            align-items: center;
+        }
+
+        /* Custom Blue Checkmarks */
+        .check-list li::before {
+            content: '✓';
+            color: var(--accent);
+            font-size: 1.2rem;
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+        
+        .check-list li:hover {
+            color: var(--text-primary);
+            transition: color 0.2s;
+        }
+
+        /* --- Footer Text --- */
+        .footer-text {
+            text-align: center;
+            color: #444;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 50px;
+        }
+
+        /* --- Bottom Navigation Bar --- */
+        .bottom-nav-container {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            pointer-events: none; 
+        }
+
+        .bottom-nav {
+            pointer-events: auto; 
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px); 
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            display: flex;
+            padding: 12px 40px;
+            gap: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            flex-wrap: wrap; 
+            justify-content: center;
+        }
+
+        .bottom-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .bottom-nav a:hover {
+            color: var(--text-primary);
+        }
+
+        .bottom-nav a.active {
+            color: var(--accent);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1.main-title { font-size: 2.5rem; }
+            .security-card { padding: 25px; }
+            .bottom-nav { padding: 10px 20px; gap: 15px; width: 95%; }
+            .bottom-nav a { font-size: 0.7rem; letter-spacing: 0.5px; }
+            .header-right { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-box">
+            <img src="https://github.com/The27LINKS/Data/blob/main/assets/image/DK2BLogo.png?raw=true" class="logo-img">
+            <span class="logo-text">DK2B</span>
+        </div>
+        <div style="font-family: 'JetBrains Mono'; font-size: 0.6rem; opacity: 0.5;">THE27LINKS</div>
+    </header>
+
+    <div class="page-wrapper">
+        
+        <div class="main-title-section">
+            <span class="pre-title">Zero Trust Architecture</span>
+            <h1 class="main-title">Enterprise <span>Privacy.</span></h1>
+            <p class="subtitle-desc">DK2B operates within your local perimeter, ensuring project data and intellectual property never leave your controlled environment.</p>
+        </div>
+
+        <div class="terminal-box">
+            <div><span class="prompt">></span> cloudflared tunnel run dk2b-local</div>
+            <div><span class="prompt">></span> Connection registered: de104</div>
+            <div><span class="prompt">></span> Protocol: quic/http2 established</div>
+            <div><span class="prompt">></span> Status: ENCRYPTED_LIVE</div>
+        </div>
+
+        <div class="security-card">
+            <h2>Cloudflare Ingress</h2>
+            <p class="card-desc">Our server is hidden from the public internet using Cloudflare Tunnel technology.</p>
+            <ul class="check-list">
+                <li>No Inbound Ports Exposed</li>
+                <li>End-to-End Handshakes</li>
+                <li>Global Edge Protection</li>
+            </ul>
+        </div>
+
+        <div class="security-card">
+            <h2>Privacy Features</h2>
+            <p class="card-desc">Designed for high-security environments where data sovereignty is critical.</p>
+            <ul class="check-list">
+                <li>Non-Persistent Data Processing</li>
+                <li>Encrypted In-Transit Logic</li>
+                <li>Perimeter-Locked Inference</li>
+            </ul>
+        </div>
+
+        <div class="security-card">
+            <h2>Data Sanitization & Validation</h2>
+            <p class="card-desc">Strict data pipelines ensure only relevant and clean data is processed by the underlying models.</p>
+            <ul class="check-list">
+                <li>Automated Email Header & Metadata Scrubbing</li>
+                <li>Strict Pydantic Schema Validation</li>
+                <li>Isolated LangGraph Processing Enclaves</li>
+            </ul>
+        </div>
+
+        <div class="security-card">
+            <h2>Environment & Key Isolation</h2>
+            <p class="card-desc">Cryptographic keys and sensitive environment configurations are heavily guarded.</p>
+            <ul class="check-list">
+                <li>Automated API Key Rotation System</li>
+                <li>Strict Local .env Variable Isolation</li>
+                <li>Resource Exhaustion (429) Fault Tolerance</li>
+            </ul>
+        </div>
+
+        <div class="footer-text">
+            POWERED BY THE27LINKS TECHNOLOGIES • 2026
+        </div>
+
+    </div> <div class="bottom-nav-container">
+        <nav class="bottom-nav">
+            <a href="index.html">HOME</a>
+            <a href="technology.html">TECH</a>
+            <a href="security.html" class="active">SECURITY</a>
+            <a href="enterprise.html">BIZ</a>
+            <a href="privacy-policy.html">PRIVACY POLICY</a>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("DK2B Security Page Loaded - Blue Theme UI/UX Enhanced");
+            
+            // Staggered fade-in effect for cards
+            const cards = document.querySelectorAll('.security-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, 100 * (index + 1)); 
+            });
+        });
+    </script>
+
+</body>
+</html>

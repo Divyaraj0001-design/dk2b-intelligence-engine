@@ -1,0 +1,332 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>BIZ-DK2B | The27LINKS</title>
+    
+    <link rel="icon" type="image/png" href="https://github.com/The27LINKS/Data/blob/main/assets/image/DK2BLogo.png?raw=true">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&family=JetBrains+Mono&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS Variables & Reset --- */
+        :root {
+            --bg-main: #050505;      
+            --bg-card: #111111;      
+            --text-primary: #ffffff; 
+            --text-secondary: #a0a0a0; 
+            --accent: #a855f7;       
+            --border-color: #222222; 
+            --nav-bg: rgba(15, 15, 15, 0.9); 
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 120px; 
+            line-height: 1.7;
+        }
+
+        /* Professional Header */
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem 1.5rem;
+            position: sticky;
+            top: 0;
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .logo-box { display: flex; align-items: center; gap: 10px; }
+        .logo-img { width: 32px; height: 32px; border-radius: 8px; }
+        .logo-text { font-weight: 800; font-size: 1rem; letter-spacing: -0.5px; }
+
+
+        /* --- Main Layout Wrapper --- */
+        .page-wrapper {
+            max-width: 1000px;
+            margin: 0 auto; 
+            padding: 20px;
+        }
+
+        .main-title-section {
+            margin-bottom: 40px;
+            margin-top: 20px;
+            text-align: left; 
+        }
+
+        h1.main-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-top: 0;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+            line-height: 1.2;
+        }
+
+        h1.main-title span {
+            color: var(--accent);
+            display: block; 
+        }
+
+        .subtitle-desc {
+            color: var(--text-secondary);
+            font-size: 1.1rem;
+            max-width: 800px;
+            line-height: 1.6;
+        }
+
+        /* --- Metrics Grid --- */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 30px;
+        }
+
+        .metric-card {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .metric-card:hover {
+            border-color: rgba(168, 85, 247, 0.4); 
+            transform: translateY(-2px);
+        }
+
+        .metric-value {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--accent);
+            margin-bottom: 5px;
+            line-height: 1;
+        }
+
+        .metric-label {
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* --- The "Boxes" (Cards) Design --- */
+        .biz-card {
+            background-color: var(--bg-card);
+            border-radius: 16px;
+            padding: 35px;
+            margin-bottom: 25px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Slight accent bar on the left of cards for enterprise feel */
+        .biz-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: var(--border-color);
+            transition: background-color 0.3s ease;
+        }
+
+        .biz-card:hover::before {
+            background-color: var(--accent);
+        }
+
+        .biz-card:hover {
+            border-color: rgba(168, 85, 247, 0.4); 
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(168, 85, 247, 0.1);
+        }
+
+        .biz-card h2 {
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            margin-top: 0;
+            margin-bottom: 12px;
+            font-weight: 600;
+            padding-left: 10px;
+        }
+
+        .biz-card p {
+            color: var(--text-secondary);
+            margin: 0;
+            font-size: 1.05rem;
+            padding-left: 10px;
+        }
+
+        /* --- Footer Text --- */
+        .footer-text {
+            text-align: center;
+            color: #444;
+            font-size: 0.75rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 50px;
+        }
+
+        /* --- Bottom Navigation Bar --- */
+        .bottom-nav-container {
+            position: fixed;
+            bottom: 30px;
+            left: 0;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            z-index: 1000;
+            pointer-events: none; 
+        }
+
+        .bottom-nav {
+            pointer-events: auto; 
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(10px); 
+            border: 1px solid var(--border-color);
+            border-radius: 50px;
+            display: flex;
+            padding: 12px 40px;
+            gap: 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            flex-wrap: wrap; 
+            justify-content: center;
+        }
+
+        .bottom-nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1.2px;
+            transition: color 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        .bottom-nav a:hover {
+            color: var(--text-primary);
+        }
+
+        .bottom-nav a.active {
+            color: var(--accent);
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            h1.main-title { font-size: 2.5rem; }
+            .metrics-grid { grid-template-columns: 1fr; gap: 15px; } 
+            .metric-card { padding: 30px 20px; }
+            .biz-card { padding: 25px; }
+            .bottom-nav { padding: 10px 20px; gap: 15px; width: 95%; }
+            .bottom-nav a { font-size: 0.7rem; letter-spacing: 0.5px; }
+            .header-right { display: none; } 
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo-box">
+            <img src="https://github.com/The27LINKS/Data/blob/main/assets/image/DK2BLogo.png?raw=true" class="logo-img">
+            <span class="logo-text">DK2B</span>
+        </div>
+        <div style="font-family: 'JetBrains Mono'; font-size: 0.6rem; opacity: 0.5;">THE27LINKS</div>
+    </header>
+
+    <div class="page-wrapper">
+        
+        <div class="main-title-section">
+            <h1 class="main-title">Scalable <span>Business Logic.</span></h1>
+            <p class="subtitle-desc">Accelerating requirement analysis and architectural handoffs for complex enterprise lifecycles using an AI-powered analysis engine.</p>
+        </div>
+
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-value">90%</div>
+                <div class="metric-label">Time Saved</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-value">0.0ms</div>
+                <div class="metric-label">Exposure</div>
+            </div>
+        </div>
+
+        <div class="biz-card">
+            <h2>The27LINKS Ecosystem</h2>
+            <p>Designed as the flagship AI implementation for The27LINKS, managing requirements for software, hardware, IoT, and robotics.</p>
+        </div>
+
+        <div class="biz-card">
+            <h2>High-Volume Enterprise Ingestion</h2>
+            <p>Built for scale, the engine seamlessly ingests massive PDFs and CSV files, utilizing Map-Reduce fragmentation to process immense raw data blocks without hitting token limits.</p>
+        </div>
+
+        <div class="biz-card">
+            <h2>Intelligent Auditing Pipeline</h2>
+            <p>Employs an advanced LangGraph agent architecture. Requirements pass through strict Analyst, Auditor, and Composer nodes, guaranteeing structured and verified Pydantic schema outputs.</p>
+        </div>
+
+        <div class="biz-card">
+            <h2>Proactive Conflict Mitigation</h2>
+            <p>The auditing nodes identify logical contradictions and overlaps in project requirements before they enter the development phase, drastically reducing technical debt.</p>
+        </div>
+
+        <div class="biz-card">
+            <h2>Automated Architectural Blueprinting</h2>
+            <p>Beyond textual extraction, the engine automatically synthesizes structural logic and streams it as dynamic Mermaid.js visualizations for immediate architectural review.</p>
+        </div>
+
+        <div class="footer-text">
+            POWERED BY THE27LINKS TECHNOLOGIES • 2026
+        </div>
+
+    </div> <div class="bottom-nav-container">
+        <nav class="bottom-nav">
+            <a href="index.html">HOME</a>
+            <a href="technology.html">TECH</a>
+            <a href="security.html">SECURITY</a>
+            <a href="enterprise.html" class="active">BIZ</a>
+            <a href="privacy-policy.html">PRIVACY POLICY</a>
+        </nav>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            console.log("DK2B Enterprise (BIZ) Page Loaded - Expanded Data Enabled");
+            
+            // Staggered fade-in effect for elements
+            const animatedElements = document.querySelectorAll('.metric-card, .biz-card');
+            animatedElements.forEach((el, index) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease, border-color 0.3s ease';
+                    el.style.opacity = '1';
+                    el.style.transform = 'translateY(0)';
+                }, 100 * (index + 1)); 
+            });
+        });
+    </script>
+
+</body>
+</html>

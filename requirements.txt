@@ -1,0 +1,20 @@
+langgraph
+langchain
+langchain-openai
+pydantic
+pypdf
+python-multipart
+python-dotenv
+fastapi
+uvicorn
+google-api-core
+langchain-google-genai
+
+# ── Integration Dependencies ──────────────────────────────────────────────────
+httpx                          # Async HTTP client (Telegram polling + backend calls)
+
+# Gmail integration (only needed if ENABLE_GMAIL=true)
+google-auth
+google-auth-oauthlib
+google-auth-httplib2
+google-api-python-client
