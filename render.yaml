@@ -1,36 +1,11 @@
 services:
-  # ── 1. FastAPI Backend (Web Service) ─────────────────────────────────────────
+  # ── FastAPI Backend (Free Web Service) ──────────────────────────────────────
   - type: web
     name: dk2b-backend
     runtime: python
+    plan: free
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn backend.main:app --host 0.0.0.0 --port $PORT
     envVars:
       - key: GEMINI_API_KEYS
-        sync: false          # Set this in Render Dashboard → Environment
-      - key: DK2B_BACKEND_URL
-        value: https://dk2b-backend.onrender.com
-
-  # ── 2. Integrations Worker (Telegram Bot + Gmail Watcher) ────────────────────
-  - type: worker
-    name: dk2b-integrations
-    runtime: python
-    buildCommand: pip install -r requirements.txt
-    startCommand: python3 -m integrations.launcher
-    envVars:
-      - key: GEMINI_API_KEYS
-        sync: false
-      - key: DK2B_BACKEND_URL
-        value: https://dk2b-backend.onrender.com
-      - key: TELEGRAM_BOT_TOKEN
-        sync: false          # Set this in Render Dashboard → Environment
-      - key: ENABLE_TELEGRAM
-        value: "true"
-      - key: ENABLE_GMAIL
-        value: "true"
-      - key: GMAIL_LABEL_FILTER
-        value: "DK2B"
-      - key: GMAIL_POLL_SECONDS
-        value: "60"
-      - key: GMAIL_TOKEN_JSON
-        sync: false          # Paste base64-encoded token.json content here
+        sync: false   # Add this in Render Dashboard → Environment tab
