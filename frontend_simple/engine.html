@@ -22,6 +22,191 @@
 <!-- ══ TOAST CONTAINER ══ -->
 <div id="toast-container"></div>
 
+<!-- ══════════════════════════════════════════════════════════
+     LOGIN OVERLAY
+══════════════════════════════════════════════════════════ -->
+<div id="loginOverlay" class="fixed inset-0 z-[9999] flex-col items-center justify-center"
+     style="background:#050508; display:flex;">
+    <div class="absolute top-[-20%] left-[-10%] w-[700px] h-[700px] bg-indigo-600/6 rounded-full blur-[160px] pointer-events-none"></div>
+    <div class="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-purple-600/6 rounded-full blur-[140px] pointer-events-none"></div>
+    <div class="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-cyan-500/3 rounded-full blur-[120px] pointer-events-none"></div>
+    <div class="relative z-10 flex flex-col items-center text-center px-6 w-full max-w-sm">
+        <div class="relative mb-8">
+            <div class="w-20 h-20 rounded-2xl flex items-center justify-center shadow-2xl shadow-indigo-500/40 border border-indigo-500/30" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);">
+                <img src="https://github.com/Kwings-official/Data/blob/main/Assets/Images/DK2B.png?raw=true"
+                     class="w-14 h-14 rounded-xl" onerror="this.style.display='none'">
+            </div>
+            <div class="absolute -bottom-1.5 -right-1.5 w-5 h-5 bg-emerald-400 rounded-full border-[3px] border-[#050508] animate-pulse shadow-lg shadow-emerald-400/50"></div>
+        </div>
+        <h1 class="text-5xl font-black tracking-tight mb-1" style="background:linear-gradient(135deg,#818cf8,#a78bfa,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">DK2B</h1>
+        <p class="text-[9px] text-indigo-400/60 font-bold uppercase tracking-[0.45em] mb-3">Intelligence Engine</p>
+        <p class="text-slate-500 text-[13px] leading-relaxed mb-10 max-w-xs">AI-powered BRD analysis — extract requirements,<br>detect conflicts &amp; generate architecture diagrams.</p>
+        <button onclick="startGmailLogin()" id="loginBtn"
+            class="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-white text-gray-800 font-bold text-sm hover:bg-gray-100 active:scale-[0.98] transition-all duration-200 shadow-xl shadow-black/40 mb-4 cursor-pointer">
+            <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+            </svg>
+            Continue with Google
+        </button>
+        <p class="text-[10px] text-slate-700">By signing in, you agree to our
+            <a href="privacy-policy.html" class="text-indigo-500/60 hover:text-indigo-400 transition-colors">Privacy Policy</a>
+        </p>
+        <div class="flex flex-wrap justify-center gap-2 mt-10">
+            <span class="text-[9px] text-slate-600 bg-slate-900/60 border border-white/5 px-3 py-1.5 rounded-full">Gemini 2.5 Flash</span>
+            <span class="text-[9px] text-slate-600 bg-slate-900/60 border border-white/5 px-3 py-1.5 rounded-full">LangChain</span>
+            <span class="text-[9px] text-slate-600 bg-slate-900/60 border border-white/5 px-3 py-1.5 rounded-full">FastAPI</span>
+            <span class="text-[9px] text-slate-600 bg-slate-900/60 border border-white/5 px-3 py-1.5 rounded-full">Multi-User OAuth</span>
+        </div>
+    </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════
+     DASHBOARD HOME VIEW
+══════════════════════════════════════════════════════════ -->
+<div id="dashboardView" class="fixed inset-0 z-[9998] overflow-y-auto" style="background:#050508; display:none;">
+    <div class="fixed inset-0 pointer-events-none overflow-hidden">
+        <div class="absolute top-[-15%] left-[-5%] w-[600px] h-[600px] bg-indigo-600/5 rounded-full blur-[140px]"></div>
+        <div class="absolute bottom-[-15%] right-[-5%] w-[500px] h-[500px] bg-purple-600/5 rounded-full blur-[120px]"></div>
+    </div>
+    <!-- Navbar -->
+    <nav class="sticky top-0 z-10 px-6 py-4 border-b border-white/[0.05]" style="background:rgba(5,5,8,0.9);backdrop-filter:blur(20px);">
+        <div class="max-w-6xl mx-auto flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <div class="relative">
+                    <img src="https://github.com/Kwings-official/Data/blob/main/Assets/Images/DK2B.png?raw=true"
+                         class="w-9 h-9 rounded-xl border border-indigo-500/20"
+                         onerror="this.src='https://ui-avatars.com/api/?name=DK&background=4c1d95&color=fff&bold=true'">
+                    <div class="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-emerald-400 rounded-full border-2 border-[#050508] animate-pulse"></div>
+                </div>
+                <div>
+                    <h1 class="text-base font-black" style="background:linear-gradient(135deg,#818cf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">DK2B</h1>
+                    <p class="text-[7px] text-indigo-400/50 font-bold uppercase tracking-[0.3em] -mt-0.5">Intelligence Engine</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <div class="flex items-center gap-2.5 rounded-xl px-3 py-2" style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.07);">
+                    <img id="dashAvatar" src="" class="w-7 h-7 rounded-full border border-indigo-500/30"
+                         onerror="this.src='https://ui-avatars.com/api/?name=U&background=4c1d95&color=fff&bold=true'">
+                    <div>
+                        <div id="dashName" class="text-[11px] font-bold text-slate-200"></div>
+                        <div id="dashEmail" class="text-[9px] text-slate-500"></div>
+                    </div>
+                </div>
+                <button onclick="logoutGmail()"
+                    class="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-white/5 text-slate-600 hover:text-rose-400 hover:border-rose-500/20 hover:bg-rose-500/5 transition-all text-[10px] font-medium cursor-pointer">
+                    <i data-lucide="log-out" style="width:12px;height:12px"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+    </nav>
+    <!-- Content -->
+    <div class="relative z-10 max-w-6xl mx-auto px-6 py-10">
+        <!-- Welcome -->
+        <div class="mb-10">
+            <p class="text-indigo-400/60 text-sm font-medium mb-1">Good day,</p>
+            <h2 class="text-3xl font-black text-white mb-2">Welcome back, <span id="dashWelcomeName" style="background:linear-gradient(135deg,#818cf8,#a78bfa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;"></span></h2>
+            <p class="text-slate-500 text-sm">Your AI-powered business requirements engine is ready.</p>
+        </div>
+        <!-- Main CTA Card -->
+        <div class="relative rounded-3xl overflow-hidden mb-8 cursor-pointer group" onclick="showEngine()"
+             style="background:linear-gradient(135deg,rgba(99,102,241,0.12),rgba(139,92,246,0.12));border:1px solid rgba(99,102,241,0.2);">
+            <div class="absolute inset-0 bg-gradient-to-r from-indigo-600/10 to-purple-600/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+            <div class="absolute top-0 right-0 w-64 h-64 bg-indigo-500/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/4 pointer-events-none"></div>
+            <div class="relative z-10 flex flex-col sm:flex-row items-center justify-between gap-6 p-8">
+                <div>
+                    <div class="flex items-center gap-2 mb-3">
+                        <div class="w-2 h-2 bg-emerald-400 rounded-full animate-pulse"></div>
+                        <span class="text-[9px] text-emerald-400 font-bold uppercase tracking-[0.2em]">AI System Ready</span>
+                    </div>
+                    <h3 class="text-2xl font-black text-white mb-2">BRD Intelligence Engine</h3>
+                    <p class="text-slate-400 text-sm max-w-md">Paste your requirements or upload a file — AI extracts, analyzes, and generates architecture diagrams instantly.</p>
+                    <div class="flex flex-wrap gap-2 mt-4">
+                        <span class="text-[9px] bg-indigo-500/15 text-indigo-300 border border-indigo-500/20 px-2.5 py-1 rounded-full">Gemini 2.5 Flash</span>
+                        <span class="text-[9px] bg-purple-500/15 text-purple-300 border border-purple-500/20 px-2.5 py-1 rounded-full">PDF / CSV / Text</span>
+                        <span class="text-[9px] bg-cyan-500/15 text-cyan-300 border border-cyan-500/20 px-2.5 py-1 rounded-full">Mermaid Diagrams</span>
+                    </div>
+                </div>
+                <button class="flex-shrink-0 flex items-center gap-3 px-7 py-4 rounded-2xl font-bold text-white text-sm transition-all group-hover:scale-105 active:scale-[0.98] shadow-xl shadow-indigo-500/30 cursor-pointer"
+                        style="background:linear-gradient(135deg,#4f46e5,#7c3aed);">
+                    <i data-lucide="zap" style="width:18px;height:18px"></i>
+                    Launch Engine
+                </button>
+            </div>
+        </div>
+        <!-- Integration Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+            <div class="rounded-2xl p-5" style="background:rgba(17,17,17,0.8);border:1px solid rgba(255,255,255,0.05);">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-rose-500/15 border border-rose-500/20 flex items-center justify-center">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M20 4H4C2.9 4 2 4.9 2 6v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2Zm0 4-8 5-8-5V6l8 5 8-5v2Z" fill="#f87171"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="text-[11px] font-bold text-slate-200">Gmail Connected</h4>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                            <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                            <span class="text-[9px] text-emerald-400/80">Active</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-[10px] text-slate-600 leading-relaxed">Email BRD reports to <span id="dashEmailSmall" class="text-slate-500 font-mono"></span></p>
+            </div>
+            <a href="https://t.me/Mac123121_bot" target="_blank"
+               class="rounded-2xl p-5 block hover:border-sky-500/25 transition-all group" style="background:rgba(17,17,17,0.8);border:1px solid rgba(255,255,255,0.05);">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-sky-500/15 border border-sky-500/20 flex items-center justify-center group-hover:scale-110 transition-transform">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M12 2C6.477 2 2 6.477 2 12s4.477 10 10 10 10-4.477 10-10S17.523 2 12 2Zm4.93 6.817-1.687 7.953c-.124.558-.457.695-.927.433l-2.563-1.889-1.237 1.191c-.137.137-.252.252-.517.252l.185-2.617 4.765-4.303c.207-.185-.045-.288-.32-.103L8.42 14.41 5.9 13.632c-.552-.172-.563-.552.116-.817L17.127 8.2c.46-.166.861.103.803.617Z" fill="#38bdf8"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="text-[11px] font-bold text-slate-200">Telegram Bot</h4>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                            <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                            <span class="text-[9px] text-emerald-400/80">@Mac123121_bot</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-[10px] text-slate-600 leading-relaxed">Send requirements → get BRD instantly via Telegram</p>
+            </a>
+            <div class="rounded-2xl p-5" style="background:rgba(17,17,17,0.8);border:1px solid rgba(255,255,255,0.05);">
+                <div class="flex items-center gap-3 mb-4">
+                    <div class="w-10 h-10 rounded-xl bg-indigo-500/15 border border-indigo-500/20 flex items-center justify-center">
+                        <i data-lucide="brain" style="width:18px;height:18px;color:#818cf8"></i>
+                    </div>
+                    <div>
+                        <h4 class="text-[11px] font-bold text-slate-200">Gemini AI</h4>
+                        <div class="flex items-center gap-1.5 mt-0.5">
+                            <div class="w-1.5 h-1.5 bg-emerald-400 rounded-full animate-pulse"></div>
+                            <span class="text-[9px] text-emerald-400/80">Gemini 2.5 Flash</span>
+                        </div>
+                    </div>
+                </div>
+                <p class="text-[10px] text-slate-600 leading-relaxed">Multi-key rotation for uninterrupted AI analysis at scale</p>
+            </div>
+        </div>
+        <!-- How it works -->
+        <div class="rounded-2xl p-6" style="background:rgba(17,17,17,0.8);border:1px solid rgba(255,255,255,0.05);">
+            <h4 class="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em] mb-5">How It Works</h4>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-indigo-500/15 text-indigo-400 flex items-center justify-center flex-shrink-0 text-[11px] font-black border border-indigo-500/20">1</div>
+                    <div><p class="text-[11px] font-bold text-slate-300 mb-1">Input BRD</p><p class="text-[10px] text-slate-600 leading-relaxed">Paste text or upload PDF / CSV file</p></div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-purple-500/15 text-purple-400 flex items-center justify-center flex-shrink-0 text-[11px] font-black border border-purple-500/20">2</div>
+                    <div><p class="text-[11px] font-bold text-slate-300 mb-1">AI Analysis</p><p class="text-[10px] text-slate-600 leading-relaxed">Gemini extracts requirements &amp; detects conflicts</p></div>
+                </div>
+                <div class="flex items-start gap-3">
+                    <div class="w-8 h-8 rounded-xl bg-cyan-500/15 text-cyan-400 flex items-center justify-center flex-shrink-0 text-[11px] font-black border border-cyan-500/20">3</div>
+                    <div><p class="text-[11px] font-bold text-slate-300 mb-1">Export &amp; Share</p><p class="text-[10px] text-slate-600 leading-relaxed">Download PDF or email report to Gmail</p></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <!-- ══ AMBIENT BACKGROUND ══ -->
 <div class="fixed inset-0 z-0 pointer-events-none overflow-hidden">
     <canvas id="particleCanvas" class="absolute inset-0 w-full h-full opacity-60"></canvas>
@@ -53,7 +238,7 @@
 </div>
 
 <!-- ══ MAIN LAYOUT ══ -->
-<div class="relative z-10 max-w-[1700px] w-full mx-auto flex flex-col lg:flex-row gap-6 p-4 lg:p-6 xl:p-8 flex-1">
+<div id="mainLayout" class="relative z-10 max-w-[1700px] w-full mx-auto flex flex-col lg:flex-row gap-6 p-4 lg:p-6 xl:p-8 flex-1" style="display:none;">
 
     <!-- ══════════════════════════════════════
          SIDEBAR
@@ -261,6 +446,10 @@
         <!-- TOP BAR -->
         <div class="glass rounded-2xl px-4 py-3 flex flex-col sm:flex-row justify-between items-center gap-3">
             <div class="flex items-center gap-3 w-full sm:w-auto flex-wrap">
+                <button onclick="showDashboard()"
+                    class="flex items-center gap-1.5 px-3 py-2 rounded-xl border border-white/5 text-slate-500 hover:text-indigo-400 hover:border-indigo-500/20 hover:bg-indigo-500/5 transition-all text-[9px] font-bold uppercase tracking-[0.1em] cursor-pointer">
+                    <i data-lucide="arrow-left" class="w-3 h-3"></i> Dashboard
+                </button>
                 <!-- Auditor toggle -->
                 <div class="flex items-center gap-2 bg-slate-900/60 px-3.5 py-2 rounded-xl border border-white/5">
                     <i data-lucide="shield-check" class="w-3 h-3 text-slate-500"></i>
@@ -732,9 +921,29 @@ document.addEventListener('DOMContentLoaded', () => {
 <script>
 const BACKEND = 'https://dk2b-backend.onrender.com';
 
+// ── View Management ───────────────────────────────────────────────────────────
+function showLogin() {
+    document.getElementById('loginOverlay').style.display  = 'flex';
+    document.getElementById('dashboardView').style.display = 'none';
+    document.getElementById('mainLayout').style.display    = 'none';
+}
+
+function showDashboard() {
+    document.getElementById('loginOverlay').style.display  = 'none';
+    document.getElementById('dashboardView').style.display = 'block';
+    document.getElementById('mainLayout').style.display    = 'none';
+    if (window.lucide) window.lucide.createIcons();
+}
+
+function showEngine() {
+    document.getElementById('loginOverlay').style.display  = 'none';
+    document.getElementById('dashboardView').style.display = 'none';
+    document.getElementById('mainLayout').style.display    = 'flex';
+    if (window.lucide) window.lucide.createIcons();
+}
+
 // ── Restore session on page load ──────────────────────────────────────────────
 (function restoreSession() {
-    // Check if returning from Google OAuth callback
     const params = new URLSearchParams(window.location.search);
     if (params.get('login') === 'success') {
         const token   = params.get('token')   || '';
@@ -746,24 +955,26 @@ const BACKEND = 'https://dk2b-backend.onrender.com';
             localStorage.setItem('dk2b_email',   email);
             localStorage.setItem('dk2b_name',    name);
             localStorage.setItem('dk2b_picture', picture);
-            // Clean URL
             window.history.replaceState({}, '', window.location.pathname);
-            if (window.showToast) showToast(`✓ Gmail connected — ${email}`, 'success', 4000);
         }
     }
-    // Restore UI from stored session
     const storedToken = localStorage.getItem('dk2b_token');
     if (storedToken) {
-        updateGmailUI(
-            localStorage.getItem('dk2b_name'),
-            localStorage.getItem('dk2b_email'),
-            localStorage.getItem('dk2b_picture')
-        );
+        const name    = localStorage.getItem('dk2b_name');
+        const email   = localStorage.getItem('dk2b_email');
+        const picture = localStorage.getItem('dk2b_picture');
+        updateGmailUI(name, email, picture);
+        showDashboard();
+    } else {
+        showLogin();
     }
 })();
 
-// ── Update sidebar Gmail UI ───────────────────────────────────────────────────
+// ── Update all UI elements with user info ─────────────────────────────────────
 function updateGmailUI(name, email, picture) {
+    const avatarUrl = picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(name||'U')}&background=4c1d95&color=fff&bold=true`;
+
+    // Sidebar (engine view)
     const loginSection = document.getElementById('gmailLoginSection');
     const userSection  = document.getElementById('gmailUserSection');
     const avatar       = document.getElementById('gmailAvatar');
@@ -773,9 +984,21 @@ function updateGmailUI(name, email, picture) {
     if (name && email) {
         loginSection?.classList.add('hidden');
         userSection?.classList.remove('hidden');
-        if (avatar)  avatar.src = picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=4c1d95&color=fff&bold=true`;
+        if (avatar)  avatar.src = avatarUrl;
         if (nameEl)  nameEl.textContent  = name;
         if (emailEl) emailEl.textContent = email;
+
+        // Dashboard nav
+        const dashAvatar = document.getElementById('dashAvatar');
+        const dashName   = document.getElementById('dashName');
+        const dashEmail  = document.getElementById('dashEmail');
+        const dashWelcome = document.getElementById('dashWelcomeName');
+        const dashEmailSmall = document.getElementById('dashEmailSmall');
+        if (dashAvatar) dashAvatar.src = avatarUrl;
+        if (dashName)   dashName.textContent  = name;
+        if (dashEmail)  dashEmail.textContent = email;
+        if (dashWelcome) dashWelcome.textContent = name.split(' ')[0];
+        if (dashEmailSmall) dashEmailSmall.textContent = email;
     } else {
         loginSection?.classList.remove('hidden');
         userSection?.classList.add('hidden');
@@ -785,16 +1008,17 @@ function updateGmailUI(name, email, picture) {
 
 // ── Start Google OAuth flow ───────────────────────────────────────────────────
 async function startGmailLogin() {
+    const btn = document.getElementById('loginBtn');
+    if (btn) { btn.disabled = true; btn.textContent = 'Connecting...'; }
     try {
-        if (window.showToast) showToast('Connecting to Google...', 'info', 2000);
         const res = await fetch(`${BACKEND}/auth/google/login`);
         if (!res.ok) throw new Error(await res.text());
         const { auth_url } = await res.json();
-        window.location.href = auth_url;   // Redirect to Google consent screen
+        window.location.href = auth_url;
     } catch (err) {
         console.error('OAuth error:', err);
-        if (window.showToast) showToast('❌ Could not connect to backend. Is it running?', 'error', 5000);
-        else alert('Could not reach backend: ' + err.message);
+        if (btn) { btn.disabled = false; btn.textContent = 'Continue with Google'; }
+        if (window.showToast) showToast('Could not connect to backend. Is it running?', 'error', 5000);
     }
 }
 
@@ -814,7 +1038,8 @@ async function logoutGmail() {
     localStorage.removeItem('dk2b_name');
     localStorage.removeItem('dk2b_picture');
     updateGmailUI(null, null, null);
-    if (window.showToast) showToast('Logged out from Gmail', 'info', 2500);
+    showLogin();
+    if (window.showToast) showToast('Logged out successfully', 'info', 2500);
 }
 
 // ── Email BRD report to user's Gmail ─────────────────────────────────────────
