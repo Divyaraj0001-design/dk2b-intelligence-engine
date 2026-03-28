@@ -112,6 +112,57 @@
             </div>
         </div>
 
+        <!-- GMAIL ACCOUNT CARD -->
+        <div class="glass rounded-2xl p-5 relative overflow-hidden">
+            <div class="section-line"></div>
+            <h4 class="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em] mb-3 mt-1">Gmail Account</h4>
+
+            <!-- Not logged in -->
+            <div id="gmailLoginSection">
+                <p class="text-[9px] text-slate-500 leading-relaxed mb-3">Connect your Gmail to receive BRD reports directly in your inbox.</p>
+                <button onclick="startGmailLogin()"
+                    class="w-full flex items-center justify-center gap-2.5 px-4 py-2.5 rounded-xl
+                           border border-white/10 bg-white/5 hover:bg-white/10 
+                           transition-all duration-200 hover:border-white/20 group cursor-pointer">
+                    <svg width="16" height="16" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+                        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+                        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+                        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+                    </svg>
+                    <span class="text-[11px] font-bold text-slate-300 group-hover:text-white transition-colors">Sign in with Google</span>
+                </button>
+            </div>
+
+            <!-- Logged in state -->
+            <div id="gmailUserSection" class="hidden">
+                <div class="flex items-center gap-3 mb-3">
+                    <img id="gmailAvatar" src="" alt="avatar"
+                         class="w-9 h-9 rounded-full border-2 border-indigo-500/40 flex-shrink-0"
+                         onerror="this.src='https://ui-avatars.com/api/?name=U&background=4c1d95&color=fff&bold=true';">
+                    <div class="min-w-0">
+                        <div id="gmailName" class="text-[11px] font-bold text-slate-200 truncate"></div>
+                        <div id="gmailEmail" class="text-[9px] text-slate-500 truncate"></div>
+                    </div>
+                    <div class="w-2 h-2 bg-emerald-400 rounded-full flex-shrink-0 animate-pulse" title="Gmail connected"></div>
+                </div>
+                <button onclick="emailBRDReport()" id="emailReportBtn"
+                    class="w-full flex items-center justify-center gap-2 px-3 py-2 mb-2 rounded-xl
+                           bg-indigo-500/15 border border-indigo-500/25 text-indigo-300
+                           hover:bg-indigo-500/25 transition-all text-[10px] font-bold cursor-pointer">
+                    <i data-lucide="mail" style="width:12px;height:12px"></i>
+                    Email BRD to My Gmail
+                </button>
+                <button onclick="logoutGmail()"
+                    class="w-full flex items-center justify-center gap-2 px-3 py-2 rounded-xl
+                           bg-slate-900/50 border border-white/5 text-slate-500
+                           hover:text-rose-400 hover:border-rose-500/20 transition-all text-[9px] font-medium cursor-pointer">
+                    <i data-lucide="log-out" style="width:10px;height:10px"></i>
+                    Logout
+                </button>
+            </div>
+        </div>
+
         <!-- POWERED BY -->
         <div class="glass rounded-2xl p-5">
             <h4 class="text-[9px] font-black text-slate-600 uppercase tracking-[0.2em] mb-3">Powered By</h4>
@@ -675,6 +726,166 @@ document.addEventListener('DOMContentLoaded', () => {
         drawParticles();
     }
 });
+</script>
+
+<!-- ══ GMAIL AUTH SYSTEM ══ -->
+<script>
+const BACKEND = 'https://dk2b-backend.onrender.com';
+
+// ── Restore session on page load ──────────────────────────────────────────────
+(function restoreSession() {
+    // Check if returning from Google OAuth callback
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('login') === 'success') {
+        const token   = params.get('token')   || '';
+        const email   = params.get('email')   || '';
+        const name    = params.get('name')    || '';
+        const picture = params.get('picture') || '';
+        if (token) {
+            localStorage.setItem('dk2b_token',   token);
+            localStorage.setItem('dk2b_email',   email);
+            localStorage.setItem('dk2b_name',    name);
+            localStorage.setItem('dk2b_picture', picture);
+            // Clean URL
+            window.history.replaceState({}, '', window.location.pathname);
+            if (window.showToast) showToast(`✓ Gmail connected — ${email}`, 'success', 4000);
+        }
+    }
+    // Restore UI from stored session
+    const storedToken = localStorage.getItem('dk2b_token');
+    if (storedToken) {
+        updateGmailUI(
+            localStorage.getItem('dk2b_name'),
+            localStorage.getItem('dk2b_email'),
+            localStorage.getItem('dk2b_picture')
+        );
+    }
+})();
+
+// ── Update sidebar Gmail UI ───────────────────────────────────────────────────
+function updateGmailUI(name, email, picture) {
+    const loginSection = document.getElementById('gmailLoginSection');
+    const userSection  = document.getElementById('gmailUserSection');
+    const avatar       = document.getElementById('gmailAvatar');
+    const nameEl       = document.getElementById('gmailName');
+    const emailEl      = document.getElementById('gmailEmail');
+
+    if (name && email) {
+        loginSection?.classList.add('hidden');
+        userSection?.classList.remove('hidden');
+        if (avatar)  avatar.src = picture || `https://ui-avatars.com/api/?name=${encodeURIComponent(name)}&background=4c1d95&color=fff&bold=true`;
+        if (nameEl)  nameEl.textContent  = name;
+        if (emailEl) emailEl.textContent = email;
+    } else {
+        loginSection?.classList.remove('hidden');
+        userSection?.classList.add('hidden');
+    }
+    if (window.lucide) window.lucide.createIcons();
+}
+
+// ── Start Google OAuth flow ───────────────────────────────────────────────────
+async function startGmailLogin() {
+    try {
+        if (window.showToast) showToast('Connecting to Google...', 'info', 2000);
+        const res = await fetch(`${BACKEND}/auth/google/login`);
+        if (!res.ok) throw new Error(await res.text());
+        const { auth_url } = await res.json();
+        window.location.href = auth_url;   // Redirect to Google consent screen
+    } catch (err) {
+        console.error('OAuth error:', err);
+        if (window.showToast) showToast('❌ Could not connect to backend. Is it running?', 'error', 5000);
+        else alert('Could not reach backend: ' + err.message);
+    }
+}
+
+// ── Logout ────────────────────────────────────────────────────────────────────
+async function logoutGmail() {
+    const token = localStorage.getItem('dk2b_token');
+    if (token) {
+        try {
+            await fetch(`${BACKEND}/auth/logout`, {
+                method: 'POST',
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+        } catch (_) {}
+    }
+    localStorage.removeItem('dk2b_token');
+    localStorage.removeItem('dk2b_email');
+    localStorage.removeItem('dk2b_name');
+    localStorage.removeItem('dk2b_picture');
+    updateGmailUI(null, null, null);
+    if (window.showToast) showToast('Logged out from Gmail', 'info', 2500);
+}
+
+// ── Email BRD report to user's Gmail ─────────────────────────────────────────
+async function emailBRDReport() {
+    const token = localStorage.getItem('dk2b_token');
+    if (!token) {
+        if (window.showToast) showToast('Please connect Gmail first', 'error', 3000);
+        return;
+    }
+
+    // Check if analysis exists
+    const reqList = document.getElementById('requirementsList');
+    const reqCards = reqList ? reqList.querySelectorAll('.requirement-card') : [];
+    if (reqCards.length === 0) {
+        if (window.showToast) showToast('Run an analysis first to generate a report', 'error', 3000);
+        return;
+    }
+
+    const btn = document.getElementById('emailReportBtn');
+    if (btn) { btn.disabled = true; btn.innerHTML = '<i data-lucide="loader-2" style="width:12px;height:12px" class="animate-spin"></i> Sending...'; }
+
+    try {
+        // Build plain text report from current DOM
+        let reportText = 'DK2B INTELLIGENCE ENGINE — BRD REPORT\n';
+        reportText += '='.repeat(50) + '\n\n';
+        reportText += `Requirements: ${reqCards.length}\n`;
+
+        reqCards.forEach((card, i) => {
+            const title = card.querySelector('.req-title')?.textContent || `Requirement ${i+1}`;
+            const desc  = card.querySelector('.req-desc')?.textContent  || '';
+            const pri   = card.querySelector('.priority-badge')?.textContent || '';
+            reportText += `\n[REQ-${String(i+1).padStart(3,'0')}] ${title} [${pri}]\n${desc}\n`;
+        });
+
+        const conflictEls = document.querySelectorAll('#conflictsList p, #conflictsList .conflict-item');
+        const conflictCount = conflictEls.length;
+
+        const res = await fetch(`${BACKEND}/email-report`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`,
+            },
+            body: JSON.stringify({
+                report_text:    reportText,
+                report_html:    '',
+                subject:        'DK2B BRD Analysis Report',
+                req_count:      reqCards.length,
+                conflict_count: conflictCount,
+            }),
+        });
+
+        if (!res.ok) {
+            const err = await res.json();
+            throw new Error(err.detail || 'Failed to send email');
+        }
+
+        const data = await res.json();
+        if (window.showToast) showToast(`✓ BRD report sent to ${data.to}`, 'success', 5000);
+
+    } catch (err) {
+        console.error('Email report error:', err);
+        if (window.showToast) showToast(`❌ ${err.message}`, 'error', 5000);
+    } finally {
+        if (btn) {
+            btn.disabled = false;
+            btn.innerHTML = '<i data-lucide="mail" style="width:12px;height:12px"></i> Email BRD to My Gmail';
+            if (window.lucide) window.lucide.createIcons();
+        }
+    }
+}
 </script>
 
 </body>
