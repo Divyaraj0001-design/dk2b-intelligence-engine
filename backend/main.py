@@ -51,10 +51,10 @@ def rotate_api_key():
     print(f"[*] 429 Rate Limit hit. Rotating to API Key {current_key_index + 1}/{len(api_keys)}")
 
 # ── GOOGLE OAUTH CONFIG ────────────────────────────────────────────────────────
-GOOGLE_CLIENT_ID     = os.getenv("GOOGLE_CLIENT_ID", "")
-GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "")
-FRONTEND_URL         = os.getenv("FRONTEND_URL", "https://divyaraj0001-design.github.io/dk2b-intelligence-engine/frontend_simple/engine.html")
-BACKEND_URL          = os.getenv("BACKEND_URL", "https://dk2b-backend.onrender.com")
+GOOGLE_CLIENT_ID     = os.getenv("GOOGLE_CLIENT_ID", "").strip()
+GOOGLE_CLIENT_SECRET = os.getenv("GOOGLE_CLIENT_SECRET", "").strip()
+FRONTEND_URL         = os.getenv("FRONTEND_URL", "https://divyaraj0001-design.github.io/dk2b-intelligence-engine/frontend_simple/engine.html").strip()
+BACKEND_URL          = os.getenv("BACKEND_URL", "https://dk2b-backend.onrender.com").strip()
 REDIRECT_URI         = f"{BACKEND_URL}/auth/google/callback"
 JWT_SECRET           = os.getenv("JWT_SECRET", secrets.token_hex(32))
 JWT_ALGORITHM        = "HS256"
