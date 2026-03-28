@@ -25,41 +25,92 @@
 <!-- ══════════════════════════════════════════════════════════
      LOGIN OVERLAY
 ══════════════════════════════════════════════════════════ -->
-<div id="loginOverlay" class="fixed inset-0 z-[9999] flex-col items-center justify-center"
+<div id="loginOverlay" class="fixed inset-0 z-[9999] flex items-center justify-center"
      style="background:#050508; display:flex;">
     <div class="absolute top-[-20%] left-[-10%] w-[700px] h-[700px] bg-indigo-600/6 rounded-full blur-[160px] pointer-events-none"></div>
     <div class="absolute bottom-[-20%] right-[-10%] w-[600px] h-[600px] bg-purple-600/6 rounded-full blur-[140px] pointer-events-none"></div>
-    <div class="absolute top-[40%] left-[40%] w-[400px] h-[400px] bg-cyan-500/3 rounded-full blur-[120px] pointer-events-none"></div>
-    <div class="relative z-10 flex flex-col items-center text-center px-6 w-full max-w-sm">
-        <div class="relative mb-8">
-            <div class="w-20 h-20 rounded-2xl flex items-center justify-center shadow-2xl shadow-indigo-500/40 border border-indigo-500/30" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);">
-                <img src="https://github.com/Kwings-official/Data/blob/main/Assets/Images/DK2B.png?raw=true"
-                     class="w-14 h-14 rounded-xl" onerror="this.style.display='none'">
+    <div class="relative z-10 w-full max-w-sm px-6">
+        <!-- Logo -->
+        <div class="flex flex-col items-center text-center mb-8">
+            <div class="relative mb-5">
+                <div class="w-16 h-16 rounded-2xl flex items-center justify-center shadow-2xl shadow-indigo-500/40 border border-indigo-500/30" style="background:linear-gradient(135deg,#4f46e5,#7c3aed);">
+                    <img src="https://github.com/Kwings-official/Data/blob/main/Assets/Images/DK2B.png?raw=true"
+                         class="w-11 h-11 rounded-xl" onerror="this.style.display='none'">
+                </div>
+                <div class="absolute -bottom-1 -right-1 w-4 h-4 bg-emerald-400 rounded-full border-2 border-[#050508] animate-pulse"></div>
             </div>
-            <div class="absolute -bottom-1.5 -right-1.5 w-5 h-5 bg-emerald-400 rounded-full border-[3px] border-[#050508] animate-pulse shadow-lg shadow-emerald-400/50"></div>
+            <h1 class="text-4xl font-black tracking-tight" style="background:linear-gradient(135deg,#818cf8,#a78bfa,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">DK2B</h1>
+            <p class="text-[8px] text-indigo-400/50 font-bold uppercase tracking-[0.4em] mt-1">Intelligence Engine</p>
         </div>
-        <h1 class="text-5xl font-black tracking-tight mb-1" style="background:linear-gradient(135deg,#818cf8,#a78bfa,#38bdf8);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">DK2B</h1>
-        <p class="text-[9px] text-indigo-400/60 font-bold uppercase tracking-[0.45em] mb-3">Intelligence Engine</p>
-        <p class="text-slate-500 text-[13px] leading-relaxed mb-10 max-w-xs">AI-powered BRD analysis — extract requirements,<br>detect conflicts &amp; generate architecture diagrams.</p>
-        <button onclick="startGmailLogin()" id="loginBtn"
-            class="w-full flex items-center justify-center gap-3 px-6 py-4 rounded-2xl bg-white text-gray-800 font-bold text-sm hover:bg-gray-100 active:scale-[0.98] transition-all duration-200 shadow-xl shadow-black/40 mb-4 cursor-pointer">
-            <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-                <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-                <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
-                <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-            </svg>
-            Continue with Google
-        </button>
-        <p class="text-[10px] text-slate-700">By signing in, you agree to our
-            <a href="privacy-policy.html" class="text-indigo-500/60 hover:text-indigo-400 transition-colors">Privacy Policy</a>
+
+        <!-- Card -->
+        <div class="rounded-2xl p-6" style="background:rgba(17,17,17,0.9);border:1px solid rgba(255,255,255,0.07);backdrop-filter:blur(20px);">
+            <!-- Tabs -->
+            <div class="flex rounded-xl p-1 mb-6" style="background:rgba(0,0,0,0.4);">
+                <button id="tabLogin" onclick="switchAuthTab('login')"
+                    class="flex-1 py-2 rounded-lg text-[11px] font-bold transition-all cursor-pointer"
+                    style="background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;">
+                    Login
+                </button>
+                <button id="tabSignup" onclick="switchAuthTab('signup')"
+                    class="flex-1 py-2 rounded-lg text-[11px] font-bold transition-all cursor-pointer text-slate-500 hover:text-slate-300">
+                    Sign Up
+                </button>
+            </div>
+
+            <!-- Login Form -->
+            <form id="loginForm" onsubmit="handleLogin(event)" class="flex flex-col gap-3">
+                <div>
+                    <label class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-1.5 block">Email</label>
+                    <input type="email" id="loginEmail" required placeholder="you@example.com"
+                        class="w-full px-4 py-2.5 rounded-xl text-[13px] text-slate-200 placeholder-slate-700 outline-none transition-all focus:border-indigo-500/50"
+                        style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                </div>
+                <div>
+                    <label class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-1.5 block">Password</label>
+                    <input type="password" id="loginPassword" required placeholder="••••••••"
+                        class="w-full px-4 py-2.5 rounded-xl text-[13px] text-slate-200 placeholder-slate-700 outline-none transition-all focus:border-indigo-500/50"
+                        style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                </div>
+                <p id="loginError" class="text-[10px] text-rose-400 hidden"></p>
+                <button type="submit" id="loginBtn"
+                    class="w-full py-3 rounded-xl font-bold text-white text-[12px] mt-1 transition-all hover:opacity-90 active:scale-[0.98] cursor-pointer"
+                    style="background:linear-gradient(135deg,#4f46e5,#7c3aed);">
+                    Login
+                </button>
+            </form>
+
+            <!-- Signup Form -->
+            <form id="signupForm" onsubmit="handleSignup(event)" class="flex flex-col gap-3 hidden">
+                <div>
+                    <label class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-1.5 block">Full Name</label>
+                    <input type="text" id="signupName" required placeholder="Divya Raj"
+                        class="w-full px-4 py-2.5 rounded-xl text-[13px] text-slate-200 placeholder-slate-700 outline-none transition-all focus:border-indigo-500/50"
+                        style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                </div>
+                <div>
+                    <label class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-1.5 block">Email</label>
+                    <input type="email" id="signupEmail" required placeholder="you@example.com"
+                        class="w-full px-4 py-2.5 rounded-xl text-[13px] text-slate-200 placeholder-slate-700 outline-none transition-all focus:border-indigo-500/50"
+                        style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                </div>
+                <div>
+                    <label class="text-[9px] font-bold text-slate-500 uppercase tracking-[0.15em] mb-1.5 block">Password</label>
+                    <input type="password" id="signupPassword" required placeholder="••••••••" minlength="6"
+                        class="w-full px-4 py-2.5 rounded-xl text-[13px] text-slate-200 placeholder-slate-700 outline-none transition-all focus:border-indigo-500/50"
+                        style="background:rgba(255,255,255,0.04);border:1px solid rgba(255,255,255,0.08);">
+                </div>
+                <p id="signupError" class="text-[10px] text-rose-400 hidden"></p>
+                <button type="submit" id="signupBtn"
+                    class="w-full py-3 rounded-xl font-bold text-white text-[12px] mt-1 transition-all hover:opacity-90 active:scale-[0.98] cursor-pointer"
+                    style="background:linear-gradient(135deg,#4f46e5,#7c3aed);">
+                    Create Account
+                </button>
+            </form>
+        </div>
+        <p class="text-center text-[10px] text-slate-700 mt-4">
+            <a href="privacy-policy.html" class="hover:text-indigo-400 transition-colors">Privacy Policy</a>
         </p>
-        <div class="flex flex-wrap justify-center gap-2 mt-10">
-            <span class="text-[9px] text-slate-600 bg-slate-900/60 border border-white/5 px-3 py-1.5 rounded-full">Gemini 2.5 Flash</span>
-            <span class="text-[9px] text-slate-600 bg-slate-900/60 border border-white/5 px-3 py-1.5 rounded-full">LangChain</span>
-            <span class="text-[9px] text-slate-600 bg-slate-900/60 border border-white/5 px-3 py-1.5 rounded-full">FastAPI</span>
-            <span class="text-[9px] text-slate-600 bg-slate-900/60 border border-white/5 px-3 py-1.5 rounded-full">Multi-User OAuth</span>
-        </div>
     </div>
 </div>
 
@@ -1006,7 +1057,83 @@ function updateGmailUI(name, email, picture) {
     if (window.lucide) window.lucide.createIcons();
 }
 
-// ── Start Google OAuth flow ───────────────────────────────────────────────────
+// ── Auth Tab Switch ───────────────────────────────────────────────────────────
+function switchAuthTab(tab) {
+    const isLogin = tab === 'login';
+    document.getElementById('loginForm').classList.toggle('hidden', !isLogin);
+    document.getElementById('signupForm').classList.toggle('hidden', isLogin);
+    document.getElementById('tabLogin').style.cssText  = isLogin
+        ? 'background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;'
+        : 'background:transparent;color:#64748b;';
+    document.getElementById('tabSignup').style.cssText = !isLogin
+        ? 'background:linear-gradient(135deg,#4f46e5,#7c3aed);color:white;'
+        : 'background:transparent;color:#64748b;';
+}
+
+// ── Save session & go to dashboard ───────────────────────────────────────────
+function saveSession(token, name, email, picture) {
+    localStorage.setItem('dk2b_token',   token);
+    localStorage.setItem('dk2b_email',   email);
+    localStorage.setItem('dk2b_name',    name);
+    localStorage.setItem('dk2b_picture', picture || '');
+    updateGmailUI(name, email, picture || '');
+    showDashboard();
+}
+
+// ── Login handler ─────────────────────────────────────────────────────────────
+async function handleLogin(e) {
+    e.preventDefault();
+    const email    = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
+    const errEl    = document.getElementById('loginError');
+    const btn      = document.getElementById('loginBtn');
+    errEl.classList.add('hidden');
+    btn.disabled = true; btn.textContent = 'Logging in...';
+    try {
+        const res = await fetch(`${BACKEND}/auth/login`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Login failed');
+        saveSession(data.token, data.name, data.email, data.picture);
+    } catch (err) {
+        errEl.textContent = err.message;
+        errEl.classList.remove('hidden');
+    } finally {
+        btn.disabled = false; btn.textContent = 'Login';
+    }
+}
+
+// ── Signup handler ────────────────────────────────────────────────────────────
+async function handleSignup(e) {
+    e.preventDefault();
+    const name     = document.getElementById('signupName').value.trim();
+    const email    = document.getElementById('signupEmail').value.trim();
+    const password = document.getElementById('signupPassword').value;
+    const errEl    = document.getElementById('signupError');
+    const btn      = document.getElementById('signupBtn');
+    errEl.classList.add('hidden');
+    btn.disabled = true; btn.textContent = 'Creating account...';
+    try {
+        const res = await fetch(`${BACKEND}/auth/register`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ name, email, password }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data.detail || 'Registration failed');
+        saveSession(data.token, data.name, data.email, data.picture);
+    } catch (err) {
+        errEl.textContent = err.message;
+        errEl.classList.remove('hidden');
+    } finally {
+        btn.disabled = false; btn.textContent = 'Create Account';
+    }
+}
+
+// ── Start Google OAuth flow (Gmail connect only) ──────────────────────────────
 async function startGmailLogin() {
     const btn = document.getElementById('loginBtn');
     if (btn) { btn.disabled = true; btn.textContent = 'Connecting...'; }
@@ -1038,6 +1165,7 @@ async function logoutGmail() {
     localStorage.removeItem('dk2b_name');
     localStorage.removeItem('dk2b_picture');
     updateGmailUI(null, null, null);
+    switchAuthTab('login');
     showLogin();
     if (window.showToast) showToast('Logged out successfully', 'info', 2500);
 }

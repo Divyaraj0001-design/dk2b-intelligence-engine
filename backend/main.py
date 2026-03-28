@@ -23,6 +23,7 @@ from google.oauth2.credentials import Credentials
 from google.auth.transport.requests import Request
 from googleapiclient.discovery import build
 from jose import jwt, JWTError
+from passlib.context import CryptContext
 
 load_dotenv()
 
@@ -69,12 +70,18 @@ GMAIL_SCOPES = [
     "https://www.googleapis.com/auth/gmail.modify",
 ]
 
-# ── IN-MEMORY USER TOKEN STORE ─────────────────────────────────────────────────
-# { user_id: { "credentials": {...}, "email": "...", "name": "...", "picture": "..." } }
+# ── PASSWORD HASHING ──────────────────────────────────────────────────────────
+pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+
+# ── IN-MEMORY STORES ──────────────────────────────────────────────────────────
+# Registered accounts: { email: { "name": str, "hashed_password": str, "user_id": str } }
+accounts: dict = {}
+
+# Gmail OAuth tokens: { user_id: { "credentials": {...}, "email": "...", ... } }
 user_store: dict = {}
 
-# ── OAUTH STATE STORE (CSRF protection) ───────────────────────────────────────
-oauth_states: dict = {}   # { state: flow_object }
+# OAuth state store: { state: flow_object }
+oauth_states: dict = {}
 
 # ── JWT HELPERS ───────────────────────────────────────────────────────────────
 def create_jwt(user_id: str, email: str, name: str, picture: str) -> str:
@@ -127,6 +134,15 @@ class ProjectAnalysis(BaseModel):
     conflicts: List[str] = Field(description="List of logical contradictions found")
     mermaid_code: str = Field(description="Mermaid.js code for a flowchart or ERD representing these requirements")
 
+class RegisterRequest(BaseModel):
+    name: str
+    email: str
+    password: str
+
+class LoginRequest(BaseModel):
+    email: str
+    password: str
+
 class EmailReportRequest(BaseModel):
     report_html: str
     report_text: str
@@ -155,6 +171,33 @@ def chunk_text(text: str, chunk_size: int = 25000):
 # ═══════════════════════════════════════════════════════════════════════════════
 # AUTH ENDPOINTS
 # ═══════════════════════════════════════════════════════════════════════════════
+
+@app.post("/auth/register")
+async def register(body: RegisterRequest):
+    """Register a new user with name, email, password."""
+    email = body.email.lower().strip()
+    if email in accounts:
+        raise HTTPException(status_code=400, detail="Email already registered.")
+    user_id = secrets.token_hex(16)
+    accounts[email] = {
+        "user_id": user_id,
+        "name": body.name.strip(),
+        "hashed_password": pwd_context.hash(body.password),
+    }
+    token = create_jwt(user_id, email, body.name.strip(), "")
+    return {"token": token, "name": body.name.strip(), "email": email, "picture": ""}
+
+
+@app.post("/auth/login")
+async def login(body: LoginRequest):
+    """Login with email and password."""
+    email = body.email.lower().strip()
+    account = accounts.get(email)
+    if not account or not pwd_context.verify(body.password, account["hashed_password"]):
+        raise HTTPException(status_code=401, detail="Invalid email or password.")
+    token = create_jwt(account["user_id"], email, account["name"], "")
+    return {"token": token, "name": account["name"], "email": email, "picture": ""}
+
 
 @app.get("/auth/google/login")
 async def google_login():

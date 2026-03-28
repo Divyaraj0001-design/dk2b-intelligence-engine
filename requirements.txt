@@ -21,5 +21,6 @@ google-api-python-client
 
 # ── Auth / Session ─────────────────────────────────────────────────────────────
 python-jose[cryptography]      # JWT session tokens
+passlib[bcrypt]                # Password hashing
 requests                       # OAuth token exchange
 pypdf                          # PDF parsing (already used)
