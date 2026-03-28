@@ -74,7 +74,7 @@ GMAIL_SCOPES = [
 user_store: dict = {}
 
 # ── OAUTH STATE STORE (CSRF protection) ───────────────────────────────────────
-oauth_states: dict = {}   # { state: True }
+oauth_states: dict = {}   # { state: flow_object }
 
 # ── JWT HELPERS ───────────────────────────────────────────────────────────────
 def create_jwt(user_id: str, email: str, name: str, picture: str) -> str:
@@ -165,7 +165,6 @@ async def google_login():
             detail="Google OAuth not configured. Set GOOGLE_CLIENT_ID and GOOGLE_CLIENT_SECRET in Render environment."
         )
     state = secrets.token_urlsafe(32)
-    oauth_states[state] = True
 
     flow = Flow.from_client_config(
         {
@@ -186,6 +185,8 @@ async def google_login():
         state=state,
         include_granted_scopes="true",
     )
+    # Store the flow object so the callback can reuse the code_verifier
+    oauth_states[state] = flow
     return {"auth_url": auth_url, "state": state}
 
 
@@ -194,22 +195,7 @@ async def google_callback(code: str = Query(...), state: str = Query(...)):
     """Step 2: Google redirects here with a code. Exchange it for tokens."""
     if state not in oauth_states:
         raise HTTPException(status_code=400, detail="Invalid OAuth state (CSRF check failed)")
-    del oauth_states[state]
-
-    flow = Flow.from_client_config(
-        {
-            "web": {
-                "client_id": GOOGLE_CLIENT_ID,
-                "client_secret": GOOGLE_CLIENT_SECRET,
-                "redirect_uris": [REDIRECT_URI],
-                "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-                "token_uri": "https://oauth2.googleapis.com/token",
-            }
-        },
-        scopes=GMAIL_SCOPES,
-        redirect_uri=REDIRECT_URI,
-        state=state,
-    )
+    flow = oauth_states.pop(state)
     flow.fetch_token(code=code)
     creds = flow.credentials
 
